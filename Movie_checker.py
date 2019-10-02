@@ -2,6 +2,31 @@ from  urllib.request import urlopen , Request
 from bs4 import BeautifulSoup
 import imdb
 import re
+import getpass
+def Debit_checker(db_n):
+	odd_sum=0
+	even_sum=0
+	for i in range(0,16):
+		if((i+1)%2==0):
+			even_sum+=int(db_n[i])
+		else:
+			y=int(db_n[i])*2
+			a=y%10
+			b=y//10
+			odd_sum+=a+b
+	if (odd_sum+even_sum)%10==0:
+		passwd = getpass.getpass("Enter Your Pin : ")
+		print()
+		if passwd.lower() == 'correct':
+			print("Congratulations!! Your Ticket Is Booked.")
+			print()
+		else:
+			print("Pin is Incorrect!")
+			print()
+	else:
+		print("Wrong! Debit Card Number ")
+		print()
+		
 def cities():
 	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
 	req = Request(url='https://in.bookmyshow.com/', headers=headers) 
@@ -105,13 +130,15 @@ def __seats(link,time,l_o_t,c_c):
 		if l_o_t[i] is time: 
 			break
 	list_of_seats = eval(dict_of_VC_and_seats[c_c][i][1:-1])
-	aval_of_seat = {}
+	dic_of_seats = {}
 	print("Seats available at "+str(time)+" are : ",end="")
 	for k in range(len(list_of_seats)):
 		_x = eval(str(list_of_seats[k]))
+		dic_of_seats[_x['desc']] = _x['price']
 		print(str(_x['desc'])+" : "+str(_x['price'])+" : "+str(_x['availabilityText']) )
 		print("                                 ",end="")
 	print()
+	return dic_of_seats
 
 print()	
 lang = input("Enter the Specific Language : ")
@@ -140,7 +167,40 @@ print("Timings of "+str(cinema)+" are : "+str(timing_list))
 print()
 time = input("Enter the time of the Show : ")
 print()
-__seats(link,time,timing_list,cinemas[cinema])
+seat_price = __seats(link,time,timing_list,cinemas[cinema])
+Selected_seat = input("Enter the Seat Brand you Want ot Choose : ")
+print()
+no_of_seats = int(input("Enter No of Seats You Want : "))
+print()
+bill = 1
+for i in range(no_of_seats):
+	bill += float(seat_price[Selected_seat])
+print("Your Total Bill is : "+str(bill))
+print()
+print("Mode of Payments : 1. Cash\t2. Debit Card\t3. Paytm\t4. UPI")
+print()
+pay_option = input("Enter the Mode of Payment : ")
+if pay_option == 'Cash':
+	Print("Ticket Booked!!!! ")
+	print()
+elif pay_option == 'Debit Card':
+	db_num = int(input("Enter Your Debit Card Number : "))
+	Debit_checker(str(db_num))
+	print()
+elif pay_option == 'Paytm':
+	Print("Ticket Booked!!!! ")
+	print()
+elif pay_option == 'UPI':
+	Print("Ticket Booked!!!! ")
+	print()
+
+
+
+
+#---------------------------------------------------------------END-----------------------------------------------------
+
+
+
 
 
 
