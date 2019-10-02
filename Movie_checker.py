@@ -173,7 +173,7 @@ Selected_seat = input("Enter the Seat Brand you Want to Choose : ")
 print()
 no_of_seats = int(input("Enter No of Seats You Want : "))
 print()
-bill = 1
+bill = 0
 for i in range(no_of_seats):
 	bill += float(seat_price[Selected_seat])
 print("Your Total Bill is : "+str(bill))
