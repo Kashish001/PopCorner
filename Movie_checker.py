@@ -15,6 +15,7 @@ def Debit_checker(db_n):
 			b=y//10
 			odd_sum+=a+b
 	if (odd_sum+even_sum)%10==0:
+		print()
 		passwd = getpass.getpass("Enter Your Pin : ")
 		print()
 		if passwd.lower() == 'correct':
@@ -168,7 +169,7 @@ print()
 time = input("Enter the time of the Show : ")
 print()
 seat_price = __seats(link,time,timing_list,cinemas[cinema])
-Selected_seat = input("Enter the Seat Brand you Want ot Choose : ")
+Selected_seat = input("Enter the Seat Brand you Want to Choose : ")
 print()
 no_of_seats = int(input("Enter No of Seats You Want : "))
 print()
@@ -180,6 +181,7 @@ print()
 print("Mode of Payments : 1. Cash\t2. Debit Card\t3. Paytm\t4. UPI")
 print()
 pay_option = input("Enter the Mode of Payment : ")
+print()
 if pay_option == 'Cash':
 	Print("Ticket Booked!!!! ")
 	print()
@@ -193,8 +195,6 @@ elif pay_option == 'Paytm':
 elif pay_option == 'UPI':
 	Print("Ticket Booked!!!! ")
 	print()
-
-
 
 
 #---------------------------------------------------------------END-----------------------------------------------------
