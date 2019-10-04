@@ -74,7 +74,7 @@ def ratings(li = []):
 		id = search[0].getID()
 		movie = db.get_movie(id)
 		rating.append([i,movie['rating']])
-	print("This is a list movies of in your City with their specific ratings : "+str(rating))
+	print("This is a list of movies in your City with their specific ratings : "+str(rating))
 	return rating
 
 def link_of_that_movie_to_ticket(links_of_movies,movie):
