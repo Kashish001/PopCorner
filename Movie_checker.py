@@ -45,7 +45,8 @@ def movies(city,lang):
 	html = urlopen(req).read() 
 	bs = BeautifulSoup(html,'lxml')
 	data = bs.findAll('div',{'class':'card-title'})
-	ls = bs.findAll('div',{'class':'card-container wow fadeIn movie-card-container'},'a')
+	images_data = bs.findAll('img',{'class':'__poster __animated'})
+
 	list_of_movies = []
 	for i in data:
 		list_of_movies.append(i.h4.get_text())
@@ -65,6 +66,23 @@ def __links_of_movies(city,lang):
 		links_of_movies[x] = y
 
 	return links_of_movies
+
+def movie_images(city):
+	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
+	req = Request(url='https://in.bookmyshow.com/'+str(city.lower()), headers=headers) 
+	html = urlopen(req).read() 
+	bs = BeautifulSoup(html,'lxml')
+	images_data = bs.findAll('img',{'class':'__poster __animated'})
+	dic_of_movie_image = {}
+	for i in images_data:
+		key = i.get('alt')
+		value = i.get('data-src')
+		dic_of_movie_image[key] = str(key+".jpg")
+		imagefile = open(key+".jpg", 'wb')
+		rr = Request(url="https:"+value)
+		imagefile.write(urlopen(rr).read())
+		imagefile.close()
+	return dic_of_movie_image
 
 def ratings(li = []):
 	rating = []
@@ -146,6 +164,7 @@ lang = input("Enter the Specific Language : ")
 print()
 city = input("Enter the City : ")
 print()
+dic_of_images_of_movies = movie_images(city)
 movies_list = movies(city,lang)
 ratings(movies_list)
 print()
@@ -182,35 +201,16 @@ print("Mode of Payments : 1. Cash\t2. Debit Card\t3. Paytm\t4. UPI")
 print()
 pay_option = input("Enter the Mode of Payment : ")
 print()
-if pay_option == 'Cash':
-	Print("Ticket Booked!!!! ")
+if pay_option == '1':
+	print("Ticket Booked!!!! ")
 	print()
-elif pay_option == 'Debit Card':
+elif pay_option == '2':
 	db_num = int(input("Enter Your Debit Card Number : "))
 	Debit_checker(str(db_num))
 	print()
-elif pay_option == 'Paytm':
-	Print("Ticket Booked!!!! ")
+elif pay_option == '3':
+	print("Ticket Booked!!!! ")
 	print()
-elif pay_option == 'UPI':
-	Print("Ticket Booked!!!! ")
+elif pay_option == '4':
+	print("Ticket Booked!!!! ")
 	print()
-
-
-#---------------------------------------------------------------END-----------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
